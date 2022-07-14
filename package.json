@@ -18,5 +18,8 @@
   "homepage": "https://github.com/ts-andrey/nodejs-st-22-node#readme",
   "devDependencies": {
     "nodemon": "^2.0.19"
+  },
+  "dependencies": {
+    "csvtojson": "^2.0.10"
   }
 }
