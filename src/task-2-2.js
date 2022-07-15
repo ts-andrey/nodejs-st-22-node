@@ -3,7 +3,6 @@ import { createWriteStream } from 'fs';
 import { readdir, mkdir } from 'fs/promises';
 
 const __dirname = resolve('./');
-console.log(__dirname);
 
 import csv from 'csvtojson';
 
@@ -26,38 +25,47 @@ async function txtConverter(file) {
   try {
     await readdir('txt');
   } catch (err) {
+    console.log(err);
     await mkdir('txt');
   }
-  const fileName = basename(file, '.csv');
-  const writer = createWriteStream(join('txt', `${fileName}.txt`));
-  let headers = [];
-  let headerString = '';
-  csv({ trim: true })
-    .fromFile(join('csv', file))
-    .on('header', header => {
-      headerString = header[0];
-      headers = headerString.split(';');
-    });
+  try {
+    const fileName = basename(file, '.csv');
+    const writer = createWriteStream(join('txt', `${fileName}.txt`));
+    let headers = [];
+    let headerString = '';
+    csv({ trim: true })
+      .fromFile(join('csv', file))
+      .on('header', header => {
+        headerString = header[0];
+        headers = headerString.split(';');
+      });
 
-  csv({ noheader: true, trim: true })
-    .fromFile(join('csv', file))
-    .on('data', data => write({ writer, headerString, headers, data }));
+    csv({ noheader: true, trim: true })
+      .fromFile(join('csv', file))
+      .on('data', data => write({ writer, headerString, headers, data }));
+  } catch (error) {
+    console.log(error);
+  }
 }
 // separate async func to do writing operation into the file
 async function write({ writer, data, headerString, headers }) {
-  const csvLine = JSON.parse(data);
-  const obj = csvLine.field1;
-  const remainder = csvLine.field2;
+  try {
+    const csvLine = JSON.parse(data);
+    const obj = csvLine.field1;
+    const remainder = csvLine.field2;
 
-  if (headerString !== obj) {
-    const values = obj.split(';');
-    const resultObj = {};
-    values.forEach((val, index) => {
-      // if value is price then add remainder to it, which is stored in another json property, named "field2"
-      resultObj[headers[index].toLowerCase()] = Number.isInteger(+val) ? +`${val}.${remainder}` : val;
-    });
-    const { book, author, price } = resultObj;
-    writer.write(`${JSON.stringify({ book, author, price })}\n`);
+    if (headerString !== obj) {
+      const values = obj.split(';');
+      const resultObj = {};
+      values.forEach((val, index) => {
+        // if value is price then add remainder to it, which is stored in another json property, named "field2"
+        resultObj[headers[index].toLowerCase()] = Number.isInteger(+val) ? +`${val}.${remainder}` : val;
+      });
+      const { book, author, price } = resultObj;
+      writer.write(`${JSON.stringify({ book, author, price })}\n`);
+    }
+  } catch (error) {
+    console.log(error);
   }
 }
 
