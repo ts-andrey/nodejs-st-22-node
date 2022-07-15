@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "task-2-1": "nodemon ./src/task-2-1.js localhost 8080",
-    "task-2-2": "nodemon ./src/task-2-2.js"
+    "task1": "nodemon ./src/task-2-1.js localhost 8080",
+    "task2": "nodemon ./src/task-2-2.js"
   },
   "repository": {
     "type": "git",
