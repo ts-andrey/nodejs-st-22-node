@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "task-2-1": "nodemon ./src/task-2-1.js localhost 8080"
+    "task-2-1": "nodemon ./build/task-2-1.js localhost 8080",
+    "task-2-2": "nodemon ./build/task-2-2.js",
+    "task-2-3": "babel src --out-dir build"
   },
   "repository": {
     "type": "git",

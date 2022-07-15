@@ -1,4 +1,4 @@
-const { stdin, stdout } = require('process');
+import { stdin, stdout } from 'process';
 
 async function transform() {
   stdout.write(`Input:\n`);

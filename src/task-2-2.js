@@ -1,12 +1,15 @@
-const { join, extname, basename } = require('path');
-const { createWriteStream } = require('fs');
-const { readdir, mkdir } = require('fs/promises');
+import { join, extname, basename, resolve } from 'path';
+import { createWriteStream } from 'fs';
+import { readdir, mkdir } from 'fs/promises';
 
-const csv = require('csvtojson');
+const __dirname = resolve('./');
+console.log(__dirname);
+
+import csv from 'csvtojson';
 
 // check csv folder on .csv files and work with them if they exists
 async function csvManager() {
-  const files = await readdir(join(__dirname, '..', 'csv'));
+  const files = await readdir(join(__dirname, 'csv'));
   files.forEach(file => {
     const isCSV = extname(file) === '.csv';
     if (isCSV) {
