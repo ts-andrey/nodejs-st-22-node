@@ -40,16 +40,18 @@ async function txtConverter(file) {
     .fromFile(join('csv', file))
     .on('data', data => write({ writer, headerString, headers, data }));
 }
-
-async function write({ writer, headerString, headers, data }) {
-  const dataStr = data.toString('utf8');
-  const obj = JSON.parse(dataStr).field1;
+// separate async func to do writing operation into the file
+async function write({ writer, data, headerString, headers }) {
+  const csvLine = JSON.parse(data);
+  const obj = csvLine.field1;
+  const remainder = csvLine.field2;
 
   if (headerString !== obj) {
     const values = obj.split(';');
     const resultObj = {};
     values.forEach((val, index) => {
-      resultObj[headers[index].toLowerCase()] = val;
+      // if value is price then add remainder to it, which is stored in another json property, named "field2"
+      resultObj[headers[index].toLowerCase()] = Number.isInteger(+val) ? +`${val}.${remainder}` : val;
     });
     const { book, author, price } = resultObj;
     writer.write(`${JSON.stringify({ book, author, price })}\n`);
