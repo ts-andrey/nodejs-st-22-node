@@ -1,0 +1,30 @@
+{
+  "name": "nodejs-st-22-node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "task1": "nodemon ./build/task-2-1.js localhost 8080",
+    "task2": "nodemon ./build/task-2-2.js",
+    "task3": "babel src --out-dir build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ts-andrey/nodejs-st-22-node.git"
+  },
+  "author": "Andrei Tsakunou",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ts-andrey/nodejs-st-22-node/issues"
+  },
+  "homepage": "https://github.com/ts-andrey/nodejs-st-22-node#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.18.6",
+    "@babel/core": "^7.18.6",
+    "@babel/preset-env": "^7.18.6",
+    "nodemon": "^2.0.19"
+  },
+  "dependencies": {
+    "csvtojson": "^2.0.10"
+  }
+}
