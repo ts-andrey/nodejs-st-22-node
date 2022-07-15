@@ -25,7 +25,7 @@ function txtConverter(file) {
     readdir('txt', function (err, files) {
       if (err) {
         mkdir('txt', function () {
-          return writer = createWriteStream(join('txt', `${fileName}.txt`));
+          return (writer = createWriteStream(join('txt', `${fileName}.txt`)));
         });
       }
       writer = createWriteStream(join('txt', `${fileName}.txt`));
