@@ -1,6 +1,6 @@
-const { stdin, stdout } = require('process');
+var { stdin, stdout } = require('process');
 
-async function transform() {
+function transform() {
   stdout.write(`Input:\n`);
   stdin.on('data', data => {
     stdout.write(`Output:`);
